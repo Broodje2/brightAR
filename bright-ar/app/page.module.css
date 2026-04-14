@@ -1,0 +1,56 @@
+:root {
+    --blur: 0.1;
+}
+
+.blur {
+    backdrop-filter: blur(calc(var(--blur) * 50px));
+}
+
+.webcam {
+  width: 100vw;
+  height: 100vh;
+  filter: brightness(1.1);
+  filter: contrast(0.9);
+}
+
+.blur_filter {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-color: rgba(226, 140, 74, 0.04);
+}
+
+.blur_filter > div {
+  position: absolute;
+  inset: 0;
+}
+
+/* Layer 1 */
+.blur_filter > div:nth-child(1) {
+  backdrop-filter: blur(0px);
+  -webkit-mask: radial-gradient(circle, transparent 20%, black 40%);
+}
+
+/* Layer 2 */
+.blur_filter > div:nth-child(2) {
+  backdrop-filter: blur(1px);
+  -webkit-mask: radial-gradient(circle, transparent 30%, black 55%);
+}
+
+/* Layer 3 */
+.blur_filter > div:nth-child(3) {
+  backdrop-filter: blur(2px);
+  -webkit-mask: radial-gradient(circle, transparent 40%, black 70%);
+}
+
+/* Layer 4 */
+.blur_filter > div:nth-child(4) {
+  backdrop-filter: blur(4px);
+  -webkit-mask: radial-gradient(circle, transparent 50%, black 85%);
+}
+
+/* Layer 5 */
+.blur_filter > div:nth-child(5) {
+  backdrop-filter: blur(8px);
+  -webkit-mask: radial-gradient(circle, transparent 60%, black 100%);
+}
