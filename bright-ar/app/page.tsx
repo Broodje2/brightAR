@@ -8,6 +8,8 @@ export default function Cam() {
 
   const webcamRef = useRef<Webcam | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const backgroundColor = useRef<HTMLDivElement | null>(null);
+  const backgroundBlur = useRef<HTMLDivElement | null>(null);
   const buffer = useRef<ImageData[]>([]);
 
   const delayRef = useRef<number>(0);
@@ -16,6 +18,9 @@ export default function Cam() {
   const getDelay = (beerCounter: number) => {
     return 600 / (1 + Math.exp(-0.9 * (beerCounter - 6)));
   };
+
+  backgroundColor.current?.classList.remove(styles.color_overlay);
+  backgroundBlur.current?.classList.remove(styles.blur_filter);
 
   useEffect(() => {
     delayRef.current = getDelay(beerCounter);
@@ -66,6 +71,30 @@ export default function Cam() {
     }
   };
 
+  if (beerCounter >= 1) {
+    backgroundColor.current?.classList.add(styles.color_overlay);
+    backgroundBlur.current?.classList.add(styles.blur_filter);
+  } else if (beerCounter >= 0) {
+    backgroundColor.current?.classList.remove(styles.color_overlay);
+    backgroundBlur.current?.classList.remove(styles.blur_filter);
+  }
+
+  if (beerCounter === 1) {
+    canvasRef.current?.classList.add(styles.canvas_1);
+    canvasRef.current?.classList.remove(styles.canvas_2);
+  } else if (beerCounter === 2) {
+    canvasRef.current?.classList.remove(styles.canvas_1);
+    canvasRef.current?.classList.add(styles.canvas_2);
+    canvasRef.current?.classList.remove(styles.canvas_3);
+  } else if (beerCounter >= 3) {
+    canvasRef.current?.classList.remove(styles.canvas_2);
+    canvasRef.current?.classList.add(styles.canvas_3);
+  } else {
+    canvasRef.current?.classList.remove(styles.canvas_1);
+    canvasRef.current?.classList.remove(styles.canvas_2);
+    canvasRef.current?.classList.remove(styles.canvas_3);
+  }
+
   useEffect(() => {
     window.addEventListener("keydown", handleKeyPress);
     return () => {
@@ -78,8 +107,8 @@ export default function Cam() {
       <div className={styles.beer_counter}>Beer Counter: {beerCounter}</div>
       <Webcam ref={webcamRef} className={styles.webcam}/>
       <canvas ref={canvasRef} className={styles.canvas}></canvas>
-      <div className={styles.color_overlay}></div>
-      <div className={styles.blur_filter}>
+      <div className={styles.color_overlay} ref={backgroundColor}></div>
+      <div className={styles.blur_filter} ref={backgroundBlur}>
         <div></div>
         <div></div>
         <div></div>

@@ -26,10 +26,19 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 69vw;
+  width: 63vw;
   transform: translate(-50%, -50%);
   height: 100vh;
   opacity: 0.5;
+}
+.canvas_1 {
+  width: 64vw;
+}
+.canvas_2 {
+  width: 65vw;
+}
+.canvas_3 {
+  width: 67vw;
 }
 
 .color_overlay {
